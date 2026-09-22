@@ -32,6 +32,7 @@ jobs:
       - name: Run tests
         run: pytest tests/ -v --tb=short
         env:
+          PYTHONPATH: "."
           ENABLE_CHAOS: "false"
 
   # ---- Build & Push Docker Image ----
