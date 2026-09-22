@@ -1,0 +1,38 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# Alert rules file
+rule_files:
+  - /etc/prometheus/alert_rules.yml
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:9093"]
+
+# Scrape targets
+scrape_configs:
+  # Flask application metrics
+  - job_name: "flask-app"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["web:5000"]
+        labels:
+          service: "demo-app"
+
+  # Node Exporter (host-level metrics)
+  - job_name: "node"
+    static_configs:
+      - targets: ["node_exporter:9100"]
+
+  # Prometheus self-monitoring
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Alertmanager
+  - job_name: "alertmanager"
+    static_configs:
+      - targets: ["alertmanager:9093"]
