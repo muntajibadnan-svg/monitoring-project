@@ -48,13 +48,16 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Check secrets configuration
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOK: ${{ secrets.DOCKER_TOKEN }}
         run: |
-          if [ -z "${{ secrets.DOCKER_USERNAME }}" ]; then
+          if [ -z "$DOCKER_USER" ]; then
             echo "❌ ERROR: DOCKER_USERNAME secret is missing or empty in GitHub Settings!"
             echo "Please add DOCKER_USERNAME in Repository Settings -> Secrets and variables -> Actions -> Repository secrets"
             exit 1
           fi
-          if [ -z "${{ secrets.DOCKER_TOKEN }}" ]; then
+          if [ -z "$DOCKER_TOK" ]; then
             echo "❌ ERROR: DOCKER_TOKEN secret is missing or empty in GitHub Settings!"
             echo "Please add DOCKER_TOKEN in Repository Settings -> Secrets and variables -> Actions -> Repository secrets"
             exit 1
