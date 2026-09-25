@@ -1,6 +1,7 @@
 services:
   # ---- Flask Application ----
   web:
+    image: mohammed314/monitoring-app:latest
     build: .
     container_name: demo-app
     ports:
